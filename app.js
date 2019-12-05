@@ -20,8 +20,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const tracksRouter = require('./routes/tracks');
 
 const port = process.env.PORT || 1455;
-app.use('/api/tracks',tracksRouter);
-app.listen(port,()=>{
-    console.log("Api Running on port ".concat(port));
+
+app.use(express.static('clientapp'));
+
+app.get('/', (req, res) => {
+
+    res.sendFile(__dirname + "/clientapp/index.html");
 });
 
+app.use('/api/tracks', tracksRouter);
+app.listen(port, () => {
+    console.log("Api Running on port ".concat(port));
+});
