@@ -5,7 +5,7 @@ router.get('/', (req, res) => {
     sqlClient.query('SELECT * FROM tracks', (err, rows) => {
         if (err) res.status(500)
             .json(ErrorMessage(err));
-        res.status(500).json({
+        res.status(200).json({
             error: false,
             tracks: rows
         });
@@ -16,7 +16,7 @@ router.get('/:id', (req, res) => {
     const { id } = req.params;
     sqlClient.query('SELECT * FROM tracks WHERE Id = ?', [id], (err, result) => {
         if (err) res.status(500).json(ErrorMessage(err));
-        res.status(500).json({
+        res.status(200).json({
             error: false,
             track: result
         });
