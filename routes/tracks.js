@@ -3,9 +3,9 @@ const sqlClient = require('../SqlClient');
 
 router.get('/', (req, res) => {
     sqlClient.query('SELECT * FROM tracks', (err, rows) => {
-        if (err) res.status(900)
+        if (err) res.status(500)
             .json(ErrorMessage(err));
-        res.status(200).json({
+        res.status(500).json({
             error: false,
             tracks: rows
         });
@@ -15,8 +15,8 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
     const { id } = req.params;
     sqlClient.query('SELECT * FROM tracks WHERE Id = ?', [id], (err, result) => {
-        if (err) res.status(900).json(ErrorMessage(err));
-        res.status(200).json({
+        if (err) res.status(500).json(ErrorMessage(err));
+        res.status(500).json({
             error: false,
             track: result
         });
@@ -44,7 +44,7 @@ router.post('/add', async (req, res) => {
             artistname
         ];
         sqlClient.query('INSERT INTO tracks (`song_name`,`thumbnail`,`file_name`,`artist_name`) VALUES (?,?,?,?)',data,(err,result)=>{
-            if(err) res.status(301).json(ErrorMessage(err));
+            if(err) res.status(500).json(ErrorMessage(err));
             res.send({
                 status: true,
                 message: 'File is uploaded',
